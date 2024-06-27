@@ -1,0 +1,100 @@
+# Laravel & PHP
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+/.env
+.phpunit.result.cache
+Homestead.yaml
+Homestead.json
+.idea
+/.vscode
+/.phpunit.result.cache
+
+# Laravel 4 specific
+bootstrap/compiled.php
+app/storage/
+
+# Laravel 5 & 6 specific
+public/storage
+public/hot
+storage/debugbar
+storage/*.key
+.env.*.php
+.env.php
+.env.testing
+
+# OS generated files #
+######################
+.DS_Store
+Thumbs.db
+
+# IDE/Editor
+############
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# Composer
+/vendor/
+composer.lock
+
+# NPM
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Laravel
+/.env
+Homestead.yaml
+Homestead.json
+/.vagrant
+/.phpunit.result.cache
+.phpunit.result.cache
+
+# Laravel Mix
+public/hot
+public/storage
+npm-debug.log
+yarn-error.log
+
+# Vagrant
+.vagrant/
+
+# Laravel IDE Helper
+.phpstorm.meta.php
+
+# Windows Image File Caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Virtual machine files
+*.sln
+*.suo
+*.ntvs*
+*.njsproj
+*.sln.docstates
+
+# Local environment files
+.env.local
+.env.*.local
+
+# Log files
+*.log
+*.tlog
+*.log-*
+*.log-*
+*.trace
+*.pid
+*.seed
+*.err
+*.pid.lock
