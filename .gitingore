@@ -2,7 +2,13 @@
 /vendor
 /node_modules
 /public/storage
+/public/css
+/public/js
 /storage/*.key
+/storage/framework/cache
+/storage/framework/sessions
+/storage/framework/views
+/storage/logs
 /.env
 .phpunit.result.cache
 Homestead.yaml
