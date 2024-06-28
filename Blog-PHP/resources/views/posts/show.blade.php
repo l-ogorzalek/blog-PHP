@@ -23,26 +23,38 @@
         </div>
     @endif
 
+    <div class="d-flex justify-content-between my-4">
+        @if ($previous)
+            <a href="{{ route('posts.show', $previous->id) }}" class="btn btn-primary">Previous</a>
+        @else
+            <span class="btn btn-secondary disabled">Previous</span>
+        @endif
+
+        @if ($next)
+            <a href="{{ route('posts.show', $next->id) }}" class="btn btn-primary">Next</a>
+        @else
+            <span class="btn btn-secondary disabled">Next</span>
+        @endif
+    </div>
+
     <h3 class="mt-5">Comments</h3>
     @foreach ($post->comments as $comment)
         <div class="card mb-2">
             <div class="card-body">
                 <p>{{ $comment->content }}</p>
-                <small class="text-muted">Posted by {{ $comment->user->name }} on {{ $comment->created_at->format('M d, Y') }}</small>
+                <small class="text-muted">Posted by {{ $comment->user ? $comment->user->name : 'Guest' }} on {{ $comment->created_at->format('M d, Y') }}</small>
             </div>
         </div>
     @endforeach
 
-    @auth
-        <h4 class="mt-4">Add a Comment</h4>
-        <form action="{{ route('comments.store') }}" method="POST">
-            @csrf
-            <input type="hidden" name="post_id" value="{{ $post->id }}">
-            <div class="mb-3">
-                <textarea class="form-control" name="content" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    @endauth
+    <h4 class="mt-4">Add a Comment</h4>
+    <form action="{{ route('comments.store') }}" method="POST">
+        @csrf
+        <input type="hidden" name="post_id" value="{{ $post->id }}">
+        <div class="mb-3">
+            <textarea class="form-control" name="content" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
 @endsection

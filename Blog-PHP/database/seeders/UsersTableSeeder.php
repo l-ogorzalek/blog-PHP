@@ -7,26 +7,34 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        $roleUser = Role::where('name', 'user')->first();
-        $roleAdmin = Role::where('name', 'admin')->first();
+        User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('password'),
+            'role_id' => 1,
+        ]);
 
         User::create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'password' => bcrypt('password'),
-            'role_id' => $roleUser->id
+            'password' => Hash::make('password'),
+            'role_id' => 3,
         ]);
 
         User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
-            'role_id' => $roleAdmin->id
+            'name' => 'Test Author',
+            'email' => 'author@example.com',
+            'password' => Hash::make('password'),
+            'role_id' => 2,
         ]);
+
+        // Tworzenie dodatkowych użytkowników
+        User::factory()->count(3)->create();
     }
 }

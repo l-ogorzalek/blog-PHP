@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,12 +19,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 
-    // Trasy dla zarządzania postami w panelu admina
+    Route::get('/admin/export', [AdminController::class, 'export'])->name('admin.export');
+
     Route::get('admin/posts', [AdminPostController::class, 'index'])->name('admin.posts.index');
     Route::get('admin/posts/create', [AdminPostController::class, 'create'])->name('admin.posts.create');
     Route::post('admin/posts', [AdminPostController::class, 'store'])->name('admin.posts.store');
@@ -31,22 +33,26 @@ Route::middleware(['auth'])->group(function () {
     Route::put('admin/posts/{post}', [AdminPostController::class, 'update'])->name('admin.posts.update');
     Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy'])->name('admin.posts.destroy');
 
-    // Trasy dla zarządzania użytkownikami w panelu admina
     Route::get('admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
     Route::get('admin/users/{user}', [AdminUserController::class, 'show'])->name('admin.users.show');
     Route::delete('admin/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
-});
 
-Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 });
 
-Route::resource('posts', PostController::class);
+Route::resource('posts', PostController::class)->middleware('auth');
 
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index')->middleware('auth');
+Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show')->middleware('auth');
 
-Route::resource('comments', CommentController::class);
+Route::resource('comments', CommentController::class)->middleware('auth');
+
+Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+
+Route::get('/superblog', function () {
+    return view('superblog');
+});
 
 Fortify::loginView(function () {
     return view('auth.login');

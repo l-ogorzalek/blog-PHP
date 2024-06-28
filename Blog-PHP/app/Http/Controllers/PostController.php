@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,10 +15,32 @@ class PostController extends Controller
         $this->middleware('role:author')->except(['index', 'show']);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::all();
-        return view('posts.index', compact('posts'));
+        $query = Post::query();
+
+        if ($request->has('author_id') && $request->author_id != '') {
+            $query->where('user_id', $request->author_id);
+        }
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where(function ($q) use ($request) {
+                $q->where('title', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('content', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+
+        if ($request->has('sort_by')) {
+            $sort_by = $request->sort_by;
+            $query->orderBy($sort_by, $request->get('order', 'asc'));
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $posts = $query->paginate(10);
+        $authors = User::whereHas('posts')->get();
+
+        return view('posts.index', compact('posts', 'authors'));
     }
 
     public function create()
@@ -44,7 +67,10 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        return view('posts.show', compact('post'));
+        $previous = Post::where('id', '<', $post->id)->orderBy('id', 'desc')->first();
+        $next = Post::where('id', '>', $post->id)->orderBy('id')->first();
+        
+        return view('posts.show', compact('post', 'previous', 'next'));
     }
 
     public function edit($id)

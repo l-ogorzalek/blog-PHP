@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -37,6 +39,15 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        $lang = $request->get('lang', Cookie::get('lang', 'en'));
+        Cookie::queue('lang', $lang, 60 * 24 * 30);
+        app()->setLocale($lang);
+        
+        Session::flash('message', __('messages.logged_in_successfully'));
     }
 
         /**

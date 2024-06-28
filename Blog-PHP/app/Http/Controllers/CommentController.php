@@ -36,7 +36,7 @@ class CommentController extends Controller
         $comment = new Comment();
         $comment->content = $request->content;
         $comment->post_id = $request->post_id;
-        $comment->user_id = auth()->id();
+        $comment->user_id = auth()->check() ? auth()->id() : null;
         $comment->save();
 
         return redirect()->route('comments.index')->with('success', 'Comment created successfully.');

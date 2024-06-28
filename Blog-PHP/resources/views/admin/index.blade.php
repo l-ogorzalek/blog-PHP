@@ -3,9 +3,10 @@
 @section('content')
 <div class="container">
     <h1>Admin Dashboard</h1>
-
+    <a href="{{ route('admin.export') }}" class="btn btn-primary mb-3">Export Data</a>
+    <br><br>
     <h2>Manage Posts</h2>
-    <a href="{{ route('admin.posts.create') }}" class="btn btn-primary mb-3">Create New Post</a>
+    <a href="{{ route('admin.posts.create') }}" class="btn btn-primary mb-2">Create New Post</a>
     <table class="table">
         <thead>
             <tr>
@@ -20,11 +21,11 @@
                 <td>{{ $post->title }}</td>
                 <td>{{ Str::limit($post->content, 50) }}</td>
                 <td>
-                    <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-warning">Edit</a>
+                    <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-warning mb-2">Edit</a>
                     <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" style="display:inline-block;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger mb-1">Delete</button>
                     </form>
                 </td>
             </tr>

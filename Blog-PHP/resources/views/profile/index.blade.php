@@ -15,6 +15,7 @@
                     <h5>{{ __('Number of comments:') }} {{ $commentsCount }}</h5>
                 </div>
             </div>
+            <button class="btn btn-warning mt-3" onclick="alert('This feature is not yet implemented. Please contact the administrator.');">Change Password</button>
         </div>
     </div>
 </div>

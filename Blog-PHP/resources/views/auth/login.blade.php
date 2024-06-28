@@ -30,6 +30,17 @@
                             @enderror
                         </div>
 
+                        <div class="form-group row mb-3">
+                            <label for="lang" class="col-md-4 col-form-label text-md-right">{{ __('Language') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="lang" name="lang" class="form-control">
+                                    <option value="en">{{ __('English') }}</option>
+                                    <option value="pl">{{ __('Polish') }}</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="form-group mb-3">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
