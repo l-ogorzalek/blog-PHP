@@ -41,6 +41,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('comments.index') }}">Comments</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('contact.show') }}">Contact us</a>
                         @auth
                             @if (auth()->user()->role->name == 'admin')
                                 <li class="nav-item">
